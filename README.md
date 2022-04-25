@@ -1,6 +1,6 @@
 # home_health_monitoring_app
 
-A new Flutter project.
+A mobile appp for medicial professionals and patients to view patient data.
 
 ## Getting Started
 
