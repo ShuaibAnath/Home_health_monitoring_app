@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
-import 'package:intl/intl.dart';
 import 'package:home_health_monitoring_app/patient_details_page.dart';
 
 class PatientListScreen extends StatefulWidget {
@@ -47,10 +46,7 @@ class _PatientListScreenState extends State<PatientListScreen> {
               ),
             ),
           trailing: const Icon(Icons.arrow_forward),
-          onTap: () {
-              print(DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(const Duration(days: 21))));
-              Navigator.pushNamed(context, PatientDetailsPage.id);
-              },
+          onTap: () => Navigator.pushNamed(context, PatientDetailsPage.id),
         );
       },
     );

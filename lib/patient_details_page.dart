@@ -14,14 +14,14 @@ class PatientDetailsPage extends StatefulWidget {
 
 class _PatientDetailsPageState extends State<PatientDetailsPage> {
   int _currentIndex = 0;
-
+  List<String> headings = ['Temperature vs days', 'BPM vs days', 'Oxygen % vs days'];
   List<Widget> pages = [
     LineChart(
       LineChartData(
         lineTouchData: LineTouchData(
           touchTooltipData: LineTouchTooltipData(
               maxContentWidth: 100,
-              tooltipBgColor: Colors.orange,
+              tooltipBgColor: Colors.orangeAccent,
               getTooltipItems: (touchedSpots) {
                 return touchedSpots.map((LineBarSpot touchedSpot) {
                   final textStyle = TextStyle(
@@ -47,7 +47,7 @@ class _PatientDetailsPageState extends State<PatientDetailsPage> {
         backgroundColor: Colors.black,
         titlesData: FlTitlesData(
           bottomTitles: AxisTitles(
-            axisNameWidget: Text(
+            axisNameWidget: const Text(
               'last 21 readings',
               style: TextStyle(
                   fontWeight: FontWeight.bold, color: Colors.deepPurpleAccent),
@@ -80,17 +80,57 @@ class _PatientDetailsPageState extends State<PatientDetailsPage> {
     ),
     LineChart(
       LineChartData(
+        titlesData: FlTitlesData(
+          bottomTitles: AxisTitles(
+            axisNameWidget: const Text(
+              'last 21 readings',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold, color: Colors.deepPurpleAccent),
+            ),
+          ),
+          rightTitles: AxisTitles(
+            axisNameWidget: Text(''),
+          ),
+          topTitles: AxisTitles(
+            axisNameWidget: Text(''),
+          ),
+        ),
+        lineTouchData: LineTouchData(
+          touchTooltipData: LineTouchTooltipData(
+              maxContentWidth: 100,
+              tooltipBgColor: Colors.orangeAccent,
+              getTooltipItems: (touchedSpots) {
+                return touchedSpots.map((LineBarSpot touchedSpot) {
+                  final textStyle = TextStyle(
+                    color: touchedSpot.bar.gradient?.colors[0] ??
+                        touchedSpot.bar.color,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  );
+                  return LineTooltipItem(
+                      '${DateFormat('yyyy-MM-dd').format(
+                        DateTime.now().subtract(
+                          Duration(
+                            days: (21 - touchedSpot.x.toInt()),
+                          ),
+                        ),
+                      )} , ${touchedSpot.y}',
+                      textStyle);
+                }).toList();
+              }),
+          handleBuiltInTouches: true,
+          getTouchLineStart: (data, index) => 0,
+        ),
         backgroundColor: Colors.black,
-        titlesData: FlTitlesData(show: false),
         minX: 0,
         maxX: 21,
         minY: 40,
-        maxY: 125,
+        maxY: 115,
         lineBarsData: [
           LineChartBarData(
             color: Colors.blueAccent,
             spots: List.generate(21,
-                (index) => FlSpot(index.toDouble(), Random().nextInt(60) + 61)),
+                (index) => FlSpot(index.toDouble(), Random().nextInt(60) + 50)),
             isCurved: true,
             barWidth: 5,
           ),
@@ -103,15 +143,55 @@ class _PatientDetailsPageState extends State<PatientDetailsPage> {
     ),
     LineChart(
       LineChartData(
+        lineTouchData: LineTouchData(
+          touchTooltipData: LineTouchTooltipData(
+              maxContentWidth: 100,
+              tooltipBgColor: Colors.orangeAccent,
+              getTooltipItems: (touchedSpots) {
+                return touchedSpots.map((LineBarSpot touchedSpot) {
+                  final textStyle = TextStyle(
+                    color: touchedSpot.bar.gradient?.colors[0] ??
+                        touchedSpot.bar.color,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  );
+                  return LineTooltipItem(
+                      '${DateFormat('yyyy-MM-dd').format(
+                        DateTime.now().subtract(
+                          Duration(
+                            days: (21 - touchedSpot.x.toInt()),
+                          ),
+                        ),
+                      )} , ${touchedSpot.y}',
+                      textStyle);
+                }).toList();
+              }),
+          handleBuiltInTouches: true,
+          getTouchLineStart: (data, index) => 0,
+        ),
         backgroundColor: Colors.black,
-        titlesData: FlTitlesData(show: false),
+        titlesData: FlTitlesData(
+          bottomTitles: AxisTitles(
+            axisNameWidget: const Text(
+              'last 21 readings',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold, color: Colors.deepPurpleAccent),
+            ),
+          ),
+          rightTitles: AxisTitles(
+            axisNameWidget: Text(''),
+          ),
+          topTitles: AxisTitles(
+            axisNameWidget: Text(''),
+          ),
+        ),
         minX: 0,
         maxX: 21,
         minY: 50,
         maxY: 100,
         lineBarsData: [
           LineChartBarData(
-            color: Colors.blueAccent,
+            color: Colors.red,
             spots: List.generate(21,
                 (index) => FlSpot(index.toDouble(), Random().nextInt(10) + 88)),
             isCurved: true,
@@ -130,13 +210,35 @@ class _PatientDetailsPageState extends State<PatientDetailsPage> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Patient Data'),
+      ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
             SizeConfig.screenWidth * 0.1,
             SizeConfig.screenHeight * 0.15,
             SizeConfig.screenWidth * 0.1,
             SizeConfig.screenHeight * 0.1),
-        child: Container(child: pages[_currentIndex]),
+        child:  Stack(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                headings[_currentIndex],
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: SizeConfig.screenHeight * 0.03,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 2,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              Expanded(child: pages[_currentIndex]),
+            ],
+          ),
+          ]
+        ),
       ),
       bottomNavigationBar: NavigationBar(
         backgroundColor: Colors.cyanAccent,
@@ -159,7 +261,7 @@ class _PatientDetailsPageState extends State<PatientDetailsPage> {
               selectedIcon: Icon(Icons.favorite)),
           NavigationDestination(
               icon: Icon(Icons.account_tree_outlined),
-              label: 'O2 SATS',
+              label: 'Oxygen %',
               selectedIcon: Icon(Icons.account_tree)),
         ],
       ),
