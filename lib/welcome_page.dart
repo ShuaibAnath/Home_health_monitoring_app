@@ -3,6 +3,7 @@ import 'package:home_health_monitoring_app/register_page.dart';
 import 'package:home_health_monitoring_app/screen_dimensions.dart';
 import 'package:home_health_monitoring_app/ui_components/buttons_and_textfields.dart';
 import 'package:flutter/material.dart';
+import 'package:home_health_monitoring_app/ui_components/styles.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);
@@ -69,16 +70,11 @@ class _WelcomePageState extends State<WelcomePage> {
                     SizedBox(height: SizeConfig.safeBlockVertical * 8),
                     DropdownButton<String>(
                       value: dropdownValue,
-                      icon: const Icon(
-                          Icons.arrow_drop_down_circle_outlined,
-                          color: Colors.black),
+                      icon: Styles.dropDownIconArrow(),
                       elevation: 16,
-                      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                      style: Styles.dropDownTextStyle(Colors.white),
                       dropdownColor: Colors.black,
-                      underline: Container(
-                        height: 2,
-                        color: Colors.black,
-                      ),
+                      underline: Styles.dropDownUnderline(),
                       onChanged: (String? newValue) {
                         setState(() {
                           dropdownValue = newValue!;
@@ -106,6 +102,7 @@ class _WelcomePageState extends State<WelcomePage> {
                           ),
                         ),
                             () => Navigator.pushNamed(context, LoginPage.id),
+
                         Text(
                           'LOGIN',
                           style: TextStyle(
@@ -135,7 +132,7 @@ class _WelcomePageState extends State<WelcomePage> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ),
+                      ), // createElevatedButton
                     ),
                   ],
                 ),

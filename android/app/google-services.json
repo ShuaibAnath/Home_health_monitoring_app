@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "341627947268",
+    "project_id": "home-health-monitoring-app",
+    "storage_bucket": "home-health-monitoring-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:341627947268:android:3b700e316cf9e4073e2851",
+        "android_client_info": {
+          "package_name": "com.example.home_health_monitoring_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "341627947268-m9c77p2uvdlvvvk60ucdp1bme5hq3via.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVgocJImDmc8gh0jJXiCz2asw-cP3GK24"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "341627947268-m9c77p2uvdlvvvk60ucdp1bme5hq3via.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
