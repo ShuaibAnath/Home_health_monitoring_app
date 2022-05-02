@@ -3,7 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:home_health_monitoring_app/home_page_dashboard.dart';
 import 'package:home_health_monitoring_app/patient_list_screen.dart';
+import 'package:home_health_monitoring_app/profile_page.dart';
 import 'package:home_health_monitoring_app/screen_dimensions.dart';
 import 'package:home_health_monitoring_app/ui_components/buttons_and_textfields.dart';
 import 'package:dropdown_search/dropdown_search.dart';
@@ -61,29 +63,19 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
     'Chatsmed Hospital'
   ];
   String? selectedItem;
+  final user = FirebaseAuth.instance.currentUser;
   List<Widget> pages = [
     const PatientListScreen(),
-    Text(
-      'home',
-      style: TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: SizeConfig.safeBlockHorizontal * 2,
-        fontStyle: FontStyle.italic,
-      ),
-    ),
-    Text(
-      'profile',
-      style: TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: SizeConfig.safeBlockHorizontal * 2,
-        fontStyle: FontStyle.italic,
-      ),
-    ),
+    const HomePageDashboard(),
+    const ProfilePage(),
   ];
-
+  List<Widget> appBarList = const [
+    Text('Patients list'),
+    Text('Dashboard'),
+    Text('Profile'),
+  ];
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
     //final functions = FirebaseFunctions.instance;
     const snackBar = SnackBar(
       content: Text(
@@ -95,6 +87,9 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
     );
     SizeConfig().init(context);
     return Scaffold(
+      appBar: AppBar(
+        title: isHospitalConfirmed ? appBarList[_currentIndex] : const Text('Hospital confirmation page'),
+      ),
       body: SafeArea(
         child: Center(
           child: isHospitalConfirmed
@@ -243,8 +238,6 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
                             FirebaseAuth.instance.signOut();
                           }),
                     ),
-                    Text(user?.email ??
-                        'No email detected, please sign out and retry'),
                   ],
                 ),
         ),

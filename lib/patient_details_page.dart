@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:home_health_monitoring_app/ui_components/buttons_and_textfields.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -130,7 +131,7 @@ class _PatientDetailsPageState extends State<PatientDetailsPage> {
           LineChartBarData(
             color: Colors.blueAccent,
             spots: List.generate(21,
-                (index) => FlSpot(index.toDouble(), Random().nextInt(60) + 50)),
+                (index) => FlSpot(index.toDouble(), Random().nextInt(40) + 60)),
             isCurved: true,
             barWidth: 5,
           ),
@@ -216,7 +217,7 @@ class _PatientDetailsPageState extends State<PatientDetailsPage> {
       body: Padding(
         padding: EdgeInsets.fromLTRB(
             SizeConfig.screenWidth * 0.1,
-            SizeConfig.screenHeight * 0.15,
+            SizeConfig.screenHeight * 0.05,
             SizeConfig.screenWidth * 0.1,
             SizeConfig.screenHeight * 0.1),
         child:  Stack(
@@ -235,6 +236,27 @@ class _PatientDetailsPageState extends State<PatientDetailsPage> {
                 textAlign: TextAlign.center,
               ),
               Expanded(child: pages[_currentIndex]),
+              UIComponents.createElevatedButton(
+                TextButton.styleFrom(
+                  backgroundColor: Colors.cyan,
+                  padding:
+                  EdgeInsets.all(SizeConfig.safeBlockVertical * 2),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                        SizeConfig.safeBlockHorizontal * 3),
+                  ),
+                ),
+                    () {
+                  print('Call cloud function to send email to hospital');
+                },
+                Text(
+                  'ACCEPT PATIENT',
+                  style: TextStyle(
+                    fontSize: SizeConfig.safeBlockVertical * 2,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
             ],
           ),
           ]

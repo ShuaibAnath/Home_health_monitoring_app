@@ -111,9 +111,9 @@ class _LoginPageState extends State<LoginPage> {
                                 hintText: 'Password',
                                 hintStyle: const TextStyle(
                                   color: Colors.black38,
-                                  //TODO: add obscure text
                                 ),
                               ),
+                              obscureText: true,
                             ),
                             SizeConfig.safeBlockVertical * 10),
                         SizedBox(height: SizeConfig.safeBlockVertical * 4),

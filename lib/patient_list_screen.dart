@@ -10,7 +10,7 @@ class PatientListScreen extends StatefulWidget {
 }
 
 class _PatientListScreenState extends State<PatientListScreen> {
-  final items = List.generate(70, (counter) => '${Random().nextInt(5) + 1}');
+  final items = List.generate(70, (counter) => '${Random().nextInt(4) + 1}');
 
   @override
   Widget build(BuildContext context) {
